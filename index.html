@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmed Wahed | AI Engineer</title>
+    <title>Ahmed Wahed Abdulaziz | AI Engineer</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
@@ -242,7 +242,7 @@
 
     <section class="hero" id="about">
         <div class="hero-content" data-aos="fade-up">
-            <h1 data-i18n="hero_hi">Hi, I'm Ahmed Wahed</h1>
+            <h1 data-i18n="hero_hi">Hi, I'm Ahmed Wahed Abdulaziz</h1>
             <h2><span id="type-text"></span><span class="type-cursor"></span></h2>
             
             <p data-i18n="hero_desc">
@@ -256,7 +256,7 @@
         </div>
         
         <div class="hero-img-container" data-aos="zoom-in" data-aos-delay="200">
-            <img src="profile.jpg" alt="Ahmed Wahed" class="profile-img">
+            <img src="profile.jpg" alt="Ahmed Wahed Abdulaziz" class="profile-img">
         </div>
     </section>
 
@@ -397,10 +397,9 @@
                 </div>
             </div>
 
-            <form id="contactForm" action="https://formsubmit.co/ahmedwheed759@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="رسالة جديدة من البورتفوليو الخاص بك!">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
+            <form id="contactForm">
+                <input type="hidden" name="access_key" value="29d25a14-6518-4896-97c3-d1313fc9e7a9">
+                <input type="hidden" name="subject" value="رسالة جديدة من البورتفوليو الخاص بك!">
 
                 <input type="text" name="name" class="form-input" placeholder="Name" required>
                 <input type="email" name="email" class="form-input" placeholder="Email" required>
@@ -414,7 +413,7 @@
     </section>
 
     <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.05); background: rgba(9, 12, 16, 0.8);">
-        <p>Designed & Built with <i class="fas fa-heart" style="color: #ff4757;"></i> by Ahmed Wahed &copy; 2026</p>
+        <p>Designed & Built with <i class="fas fa-heart" style="color: #ff4757;"></i> by Ahmed Wahed Abdulaziz &copy; 2026</p>
     </footer>
 
     <a href="https://wa.me/201158607724" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -424,10 +423,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     
     <script>
-        // --- 1. INITIALIZE AOS ---
         AOS.init({ once: true, duration: 1000, easing: 'ease-out-cubic' });
 
-        // --- 2. 3D TILT EFFECT ---
         VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
             max: 10,
             speed: 400,
@@ -436,7 +433,6 @@
             scale: 1.02
         });
 
-        // --- 3. SCROLL PROGRESS BAR ---
         window.addEventListener("scroll", () => {
             const scrollPx = document.documentElement.scrollTop;
             const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -444,11 +440,10 @@
             document.getElementById("scroll-progress").style.width = scrollLen + "%";
         });
 
-        // --- 4. TRANSLATIONS & BILINGUAL LOGIC ---
         const translations = {
             en: {
                 nav_about: "About", nav_edu: "Journey", nav_projects: "Work", nav_contact: "Contact",
-                hero_hi: "Hi, I'm Ahmed Wahed", 
+                hero_hi: "Hi, I'm Ahmed Wahed Abdulaziz", 
                 hero_desc: "Transforming complex data into intelligent solutions. Passionate about Machine Learning, Data Engineering, and building the future of AI.",
                 hero_btn: "View Work", hero_contact: "Contact Me",
                 sec_edu: "My Journey", edu_uni: "Aqaba University of Technology", edu_degree: "B.Sc. in Artificial Intelligence",
@@ -467,7 +462,7 @@
             },
             ar: {
                 nav_about: "من أنا", nav_edu: "مسيرتي", nav_projects: "أعمالي", nav_contact: "تواصل معي",
-                hero_hi: "أهلاً، أنا أحمد وحيد", 
+                hero_hi: "أهلاً، أنا أحمد وحيد عبدالعزيز", 
                 hero_desc: "أقوم بتحويل البيانات المعقدة إلى حلول ذكية. شغوف بتعلم الآلة وهندسة البيانات وبناء مستقبل الذكاء الاصطناعي.",
                 hero_btn: "شاهد أعمالي", hero_contact: "تواصل معي",
                 sec_edu: "مسيرتي المهنية", edu_uni: "جامعة العقبة للتكنولوجيا", edu_degree: "بكالوريوس ذكاء اصطناعي",
@@ -488,7 +483,6 @@
 
         let currentLang = 'en';
 
-        // --- 5. TYPEWRITER LOGIC ---
         const titles = {
             en: "AI Student | Future Machine Learning Engineer | Passionate About Intelligent Systems",
             ar: "طالب ذكاء اصطناعي | مهندس تعلم آلة مستقبلي | شغوف بالأنظمة الذكية"
@@ -516,7 +510,6 @@
             startTypewriter(titles.en);
         });
 
-        // LANGUAGE TOGGLE FUNCTION
         function toggleLanguage() {
             const langBtn = document.getElementById('langBtn');
             const body = document.body;
@@ -540,7 +533,6 @@
 
         function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
 
-        // --- 6. CUSTOM CURSOR LOGIC ---
         const cursorDot = document.querySelector('[data-cursor-dot]');
         const cursorOutline = document.querySelector('[data-cursor-outline]');
         window.addEventListener("mousemove", function(e) {
@@ -553,14 +545,12 @@
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
         });
 
-        // --- 7. NAV SCROLL EFFECT ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        // --- 8. PARTICLES (NEURAL NETWORK STYLE) ---
         particlesJS("particles-js", {
             "particles": { 
                 "number": { "value": 70 }, 
@@ -583,7 +573,7 @@
             }
         });
 
-        // --- 9. AJAX FORM SUBMISSION ---
+        // --- Web3Forms API Logic (Fast & Clean) ---
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
         const formStatus = document.getElementById('formStatus');
@@ -598,19 +588,24 @@
                 formStatus.style.display = 'none';
 
                 const formData = new FormData(contactForm);
+                const dataObj = Object.fromEntries(formData);
+                const json = JSON.stringify(dataObj);
 
-                fetch(contactForm.action, {
+                fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success || data.success === "true") {
+                .then(async (response) => {
+                    let resJson = await response.json();
+                    if (response.status == 200) {
                         formStatus.innerHTML = translations[currentLang].form_success;
                         formStatus.style.color = '#25d366';
                         formStatus.style.display = 'block';
-                        contactForm.reset(); 
+                        contactForm.reset();
                     } else {
                         formStatus.innerHTML = translations[currentLang].form_error;
                         formStatus.style.color = '#ff4757';
@@ -622,7 +617,7 @@
                     formStatus.style.color = '#ff4757';
                     formStatus.style.display = 'block';
                 })
-                .finally(() => {
+                .then(function() {
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                 });
