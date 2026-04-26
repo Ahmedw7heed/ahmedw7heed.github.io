@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Wahed | AI Engineer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-body: #090c10;
+            --bg-gradient: radial-gradient(circle at 10% 20%, rgba(88, 101, 242, 0.15), transparent 25%), radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15), transparent 25%);
+            --card-bg: rgba(22, 27, 34, 0.6);
+            --border-color: rgba(48, 54, 61, 0.7);
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-primary: #5865F2; 
+            --accent-secondary: #8B5CF6; 
+            --gradient-text: linear-gradient(135deg, #5865F2 0%, #8B5CF6 100%);
+            --glow: 0 0 20px rgba(88, 101, 242, 0.5);
+            
+            --font-main: 'Outfit', sans-serif;
+            --font-ar: 'Cairo', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+        }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent-primary), var(--accent-secondary)); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fff; }
+
+        /* --- SCROLL PROGRESS BAR --- */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+            background: var(--gradient-text); z-index: 10001;
+            box-shadow: var(--glow); border-radius: 0 5px 5px 0;
+            transition: width 0.1s ease;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: #fff; box-shadow: var(--glow); }
+        .cursor-outline {
+            width: 40px; height: 40px; border: 1px solid var(--accent-primary);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body.hovering .cursor-outline {
+            width: 60px; height: 60px; background-color: rgba(88, 101, 242, 0.2);
+            border-color: var(--accent-secondary); mix-blend-mode: screen;
+        }
+
+        /* --- PARTICLES --- */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+
+        /* --- RTL --- */
+        body.rtl { direction: rtl; font-family: var(--font-ar); text-align: right; }
+        body.rtl .nav-links { flex-direction: row-reverse; }
+        body.rtl .timeline { border-left: none; border-right: 2px solid var(--accent-primary); padding-right: 30px; padding-left: 0; }
+        body.rtl .timeline-item::before { left: auto; right: -11px; }
+        body.rtl .contact-info { text-align: right; }
+        body.rtl .whatsapp-float { left: 30px; right: auto; }
+        body.rtl .mobile-menu { right: auto; left: -100%; }
+        body.rtl .mobile-menu.active { left: 0; }
+        body.rtl .project-card h3 { text-align: right; }
+        body.rtl .section-title::after { margin-left: 0; margin-right: 20px; }
+        body.rtl .section-title span { margin-right: 0; margin-left: 10px; }
+
+        /* --- NAV --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; position: fixed; width: 90%; top: 20px; left: 5%; z-index: 1000;
+            background: rgba(22, 27, 34, 0.4); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 50px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        nav.scrolled { padding: 15px 5%; background: rgba(9, 12, 16, 0.95); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8); border-color: var(--accent-primary); }
+        .logo { font-family: var(--font-code); font-size: 1.5rem; font-weight: 800; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px;}
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: 0.3s; text-decoration: none; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--gradient-text); transition: 0.3s; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--accent-primary); }
+        .lang-btn { background: rgba(88, 101, 242, 0.1); border: 1px solid var(--accent-primary); color: var(--accent-primary); padding: 8px 25px; border-radius: 30px; font-size: 0.85rem; font-weight: bold; cursor: none; transition: 0.3s; }
+        .lang-btn:hover { background: var(--accent-primary); color: #fff; box-shadow: var(--glow); transform: translateY(-2px); }
+        .hamburger { display: none; font-size: 1.5rem; color: var(--text-main); cursor: none; }
+        
+        /* Mobile Menu */
+        .mobile-menu { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: rgba(9, 12, 16, 0.98); backdrop-filter: blur(20px); z-index: 1002; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.4s ease; border-left: 1px solid var(--accent-primary); }
+        .mobile-menu.active { right: 0; box-shadow: -20px 0 50px rgba(0,0,0,0.5); }
+        .mobile-menu a { font-size: 1.8rem; margin: 20px 0; color: var(--text-main); text-decoration: none; font-weight: bold; }
+        .mobile-close { position: absolute; top: 30px; right: 30px; font-size: 2.5rem; cursor: none; color: var(--accent-secondary); }
+
+        /* --- HERO --- */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 150px 10% 50px; max-width: 1400px; margin: 0 auto; gap: 60px; }
+        .hero-content { flex: 1; z-index: 2; }
+        .hero-img-container { flex: 1; display: flex; justify-content: center; position: relative; z-index: 1; }
+        .profile-img { width: 380px; height: 380px; object-fit: cover; border-radius: 50%; border: 4px solid transparent; background: linear-gradient(var(--bg-body), var(--bg-body)) padding-box, var(--gradient-text) border-box; box-shadow: 0 0 50px rgba(88, 101, 242, 0.3); animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        .hero h1 { font-family: var(--font-code); color: var(--accent-primary); font-size: 1.2rem; margin-bottom: 20px; font-weight: bold; letter-spacing: 2px;}
+        
+        /* TYPEWRITER */
+        .hero h2 { 
+            font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px; 
+            min-height: 140px; 
+            background: linear-gradient(to right, #fff, #8b949e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .type-cursor { display: inline-block; width: 5px; height: 1em; background: var(--gradient-text); margin-left: 5px; animation: blink 1s infinite; vertical-align: middle; box-shadow: var(--glow); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .hero p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 40px; max-width: 600px; font-weight: 300; }
+        
+        .btn-main { padding: 16px 36px; background: var(--gradient-text); color: white; border-radius: 12px; font-weight: bold; border: none; transition: 0.3s; box-shadow: var(--glow); display: inline-block; text-decoration: none; font-size: 1.1rem; }
+        .btn-main:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6); }
+        .btn-outline { padding: 16px 36px; background: transparent; color: var(--text-main); border-radius: 12px; font-weight: bold; border: 1px solid var(--accent-primary); transition: 0.3s; text-decoration: none; margin-left: 15px; display: inline-block; font-size: 1.1rem; }
+        .btn-outline:hover { background: rgba(88, 101, 242, 0.1); border-color: var(--accent-secondary); box-shadow: inset 0 0 15px rgba(88, 101, 242, 0.3); transform: translateY(-5px); }
+
+        /* --- SECTIONS --- */
+        .section { padding: 120px 10%; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-size: 2.5rem; margin-bottom: 60px; display: flex; align-items: center; font-weight: 900; letter-spacing: -1px;}
+        .section-title::after { content: ""; display: block; width: 250px; height: 2px; background: linear-gradient(90deg, var(--accent-primary), transparent); margin-left: 20px; }
+        .section-title span { color: var(--accent-primary); margin-right: 10px; font-family: var(--font-code); font-size: 2rem; font-weight: normal; }
+
+        /* --- TIMELINE (3D Supported) --- */
+        .timeline { border-left: 2px solid rgba(88, 101, 242, 0.3); padding: 20px 0; }
+        .timeline-item { position: relative; padding-left: 40px; padding-bottom: 50px; }
+        .timeline-item::before { content: ""; position: absolute; left: -10px; top: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--bg-body); border: 4px solid var(--accent-primary); box-shadow: var(--glow); }
+        .timeline-card { background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; position: relative; backdrop-filter: blur(10px); transform-style: preserve-3d; }
+        .timeline-card:hover { border-color: var(--accent-primary); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .timeline-card h3 { transform: translateZ(30px); font-size: 1.4rem; margin: 10px 0; color: #fff;}
+        .timeline-card p { transform: translateZ(20px); }
+        .timeline-card span { transform: translateZ(40px); display: inline-block; }
+
+        /* --- SKILLS (Neon Badges) --- */
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;}
+        .skill-tag { 
+            background: rgba(22, 27, 34, 0.8); color: var(--text-main); padding: 15px 30px; 
+            border-radius: 12px; font-family: var(--font-code); font-size: 1rem; font-weight: bold;
+            border: 1px solid rgba(88, 101, 242, 0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px);
+        }
+        .skill-tag i { font-size: 1.4rem; color: var(--accent-primary); transition: 0.4s;}
+        .skill-tag:hover { 
+            border-color: var(--accent-secondary); box-shadow: 0 0 25px rgba(139, 92, 246, 0.4); 
+            transform: translateY(-8px) scale(1.05); background: rgba(88, 101, 242, 0.15); 
+        }
+        .skill-tag:hover i { color: #fff; transform: rotate(360deg); }
+
+        /* --- PROJECTS (Glassmorphism + 3D Tilt) --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .project-card { 
+            background: linear-gradient(145deg, rgba(30, 35, 45, 0.6) 0%, rgba(15, 18, 25, 0.8) 100%);
+            padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); 
+            position: relative; display: flex; flex-direction: column; 
+            backdrop-filter: blur(15px); transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .project-icon { font-size: 3rem; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; transform: translateZ(50px); display: inline-block;}
+        .project-card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #fff; font-family: 'Outfit', sans-serif; text-align: left; transform: translateZ(40px);}
+        .project-card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; line-height: 1.7; flex-grow: 1; transform: translateZ(30px);}
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; direction: ltr; transform: translateZ(30px);}
+        .tech-stack span { background: rgba(0,0,0,0.4); color: var(--accent-primary); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-family: var(--font-code); border: 1px solid rgba(88, 101, 242, 0.2);}
+        .project-links { margin-top: auto; transform: translateZ(40px);}
+        .btn-link { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: rgba(0,0,0,0.3); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; text-decoration: none; transition: 0.3s; font-size: 0.95rem; font-weight: bold;}
+        .btn-link:hover { background: var(--gradient-text); border-color: transparent; color: #fff; box-shadow: var(--glow);}
+
+        /* --- CONTACT --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; background: var(--card-bg); padding: 50px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+        .info-box { margin-bottom: 30px; transform: translateZ(20px);}
+        .form-input { width: 100%; padding: 18px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; margin-bottom: 25px; font-family: var(--font-main); transition: 0.3s; font-size: 1rem;}
+        .form-input:focus { outline: none; border-color: var(--accent-primary); background: rgba(88, 101, 242, 0.05); box-shadow: 0 0 15px rgba(88, 101, 242, 0.2);}
+        
+        .whatsapp-float { position: fixed; bottom: 40px; right: 40px; width: 65px; height: 65px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); transition: 0.3s; z-index: 999; text-decoration: none;}
+        .whatsapp-float:hover { transform: translateY(-10px) scale(1.1); box-shadow: 0 15px 35px rgba(37, 211, 102, 0.6); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column-reverse; padding-top: 160px; text-align: center; }
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .contact-grid { grid-template-columns: 1fr; padding: 30px;}
+            .profile-img { width: 300px; height: 300px; }
+            .hero h2 { font-size: 2.5rem; min-height: auto; }
+            .section-title { font-size: 2rem; justify-content: center; flex-direction: column; text-align: center;}
+            .section-title::after { margin: 15px 0 0 0; width: 100px; }
+            body.rtl .section-title::after { margin: 15px 0 0 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scroll-progress"></div>
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+    
+    <div id="particles-js"></div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="mobile-close" onclick="toggleMenu()">×</span>
+        <a href="#about" onclick="toggleMenu()">About</a>
+        <a href="#education" onclick="toggleMenu()">Journey</a>
+        <a href="#projects" onclick="toggleMenu()">Projects</a>
+        <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+
+    <nav id="navbar">
+        <div class="logo">&lt;AW/&gt;</div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <ul class="nav-links">
+                <li><a href="#about" data-i18n="nav_about">About</a></li>
+                <li><a href="#education" data-i18n="nav_edu">Journey</a></li>
+                <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">العربية</button>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <section class="hero" id="about">
+        <div class="hero-content" data-aos="fade-up">
+            <h1 data-i18n="hero_hi">Hi, I'm Ahmed Wahed</h1>
+            <h2><span id="type-text"></span><span class="type-cursor"></span></h2>
+            
+            <p data-i18n="hero_desc">
+                Transforming complex data into intelligent solutions. Passionate about Machine Learning, Data Engineering, and building the future of AI.
+            </p>
+            
+            <div>
+                <a href="#projects" class="btn-main" data-i18n="hero_btn">View Work</a>
+                <a href="#contact" class="btn-outline" data-i18n="hero_contact">Contact Me</a>
+            </div>
+        </div>
+        
+        <div class="hero-img-container" data-aos="zoom-in" data-aos-delay="200">
+            <img src="profile.jpg" alt="Ahmed Wahed" class="profile-img">
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <h2 class="section-title" data-aos="fade-right"><span>01.</span> <span data-i18n="sec_edu">My Journey</span></h2>
+        <div class="timeline" data-aos="fade-up">
+            
+            <div class="timeline-item">
+                <div class="timeline-card tilt-card">
+                    <span style="color:var(--accent-primary); font-family:var(--font-code);">Present</span>
+                    <h3 data-i18n="edu_uni">Aqaba University of Technology</h3>
+                    <p style="color:var(--text-muted);" data-i18n="edu_degree">B.Sc. in Artificial Intelligence</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-card tilt-card">
+                    <span style="color:var(--accent-primary); font-family:var(--font-code);">2026</span>
+                    <h3 data-i18n="cert1_title">Professional Readiness in Automation</h3>
+                    <p style="color:var(--text-muted);" data-i18n="cert1_desc">Crown Prince Foundation & NAHNO Platform</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-card tilt-card">
+                    <span style="color:var(--accent-primary); font-family:var(--font-code);">2025</span>
+                    <h3 data-i18n="cert2_title">Artificial Intelligence Fundamentals</h3>
+                    <p style="color:var(--text-muted);" data-i18n="cert2_desc">Udacity & Crown Prince Foundation (JoCoders)</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-card tilt-card">
+                    <span style="color:var(--accent-primary); font-family:var(--font-code);">2025</span>
+                    <h3 data-i18n="cert3_title">Generative AI in Practice</h3>
+                    <p style="color:var(--text-muted);" data-i18n="cert3_desc">Specialized AI Training & Applications</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title" data-aos="fade-right"><span>02.</span> <span data-i18n="sec_skills">Tech Stack</span></h2>
+        <div class="skills-grid" data-aos="fade-up">
+            <div class="skill-tag"><i class="fab fa-python"></i> Python</div>
+            <div class="skill-tag"><i class="fas fa-database"></i> SQL</div>
+            <div class="skill-tag"><i class="fas fa-brain"></i> Machine Learning</div>
+            <div class="skill-tag"><i class="fas fa-eye"></i> Computer Vision</div>
+            <div class="skill-tag"><i class="fas fa-network-wired"></i> Data Eng</div>
+            <div class="skill-tag"><i class="fab fa-react"></i> React / Next.js</div>
+            <div class="skill-tag"><i class="fas fa-code"></i> C++ / C#</div>
+            <div class="skill-tag"><i class="fab fa-git-alt"></i> Git</div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title" data-aos="fade-right"><span>03.</span> <span data-i18n="sec_projects">Projects</span></h2>
+        <div class="projects-grid">
+            
+            <div class="project-card tilt-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="project-icon"><i class="fa-solid fa-car-on"></i></div>
+                <h3 data-i18n="proj1_title">Smart-Parking-Predicto</h3>
+                <p data-i18n="proj1_desc">An intelligent system based on computer vision to detect license plates using a custom YOLOv8 model, extracting text via EasyOCR and logging entry times.</p>
+                <div class="tech-stack">
+                    <span>Python</span><span>YOLOv8</span><span>EasyOCR</span><span>Streamlit</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Ahmedw7heed/Smart-Parking-Predicto" target="_blank" class="btn-link">
+                        <i class="fa-brands fa-github"></i> <span data-i18n="repo_btn">Repository</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card tilt-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="project-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3 data-i18n="proj2_title">AI-Match-Predictor</h3>
+                <p data-i18n="proj2_desc">A custom AI model for analyzing data and predicting match outcomes based on advanced algorithms, with a statistical dashboard.</p>
+                <div class="tech-stack">
+                    <span>Machine Learning</span><span>Python</span><span>Data Analysis</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Ahmedw7heed/AI-Match-Predictor" target="_blank" class="btn-link">
+                        <i class="fa-brands fa-github"></i> <span data-i18n="repo_btn">Repository</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card tilt-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="project-icon"><i class="fa-solid fa-newspaper"></i></div>
+                <h3 data-i18n="proj3_title">Akhbar Al-Youm</h3>
+                <p data-i18n="proj3_desc">A professional news platform designed for a seamless reading experience, with an integrated dashboard for content management.</p>
+                <div class="tech-stack">
+                    <span>React</span><span>Next.js</span><span>Tailwind</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Ahmedw7heed/ahmedw7heed.github.nwes" target="_blank" class="btn-link">
+                        <i class="fa-brands fa-github"></i> <span data-i18n="repo_btn">Repository</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card tilt-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="project-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <h3 data-i18n="proj4_title">Ai-fire</h3>
+                <p data-i18n="proj4_desc">A real-time computer vision project to detect fires and analyze scenes, providing early and smart warning systems.</p>
+                <div class="tech-stack">
+                    <span>Computer Vision</span><span>AI</span><span>Python</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Ahmedw7heed/Ai-fire" target="_blank" class="btn-link">
+                        <i class="fa-brands fa-github"></i> <span data-i18n="repo_btn">Repository</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title" data-aos="fade-right"><span>04.</span> <span data-i18n="sec_contact">Contact</span></h2>
+        <div class="contact-grid tilt-card" data-aos="zoom-in" style="transform-style: flat;">
+            <div class="contact-info">
+                <h3 style="font-size: 2rem; margin-bottom: 20px; font-family: var(--font-main);" data-i18n="contact_title">Let's Connect</h3>
+                <div class="info-box">
+                    <div style="color:var(--accent-primary); font-size:0.9rem; margin-bottom:5px; font-weight: bold;" data-i18n="contact_phone">PHONE</div>
+                    <div style="font-size:1.2rem; font-weight:600;">+20 115 860 7724</div>
+                </div>
+                <div class="info-box" style="margin-top: 20px;">
+                    <div style="color:var(--accent-primary); font-size:0.9rem; margin-bottom:5px; font-weight: bold;" data-i18n="contact_email">EMAIL</div>
+                    <div style="font-size: 1.1rem;">ahmedwheed759@gmail.com</div>
+                </div>
+                <div class="info-box">
+                    <div style="display: flex; gap: 20px; font-size: 1.8rem; margin-top: 30px;">
+                        <a href="https://linkedin.com/in/ahmed-wahed-60542435a" target="_blank" style="color:var(--text-main); transition:0.3s;"><i class="fab fa-linkedin hover-glow"></i></a>
+                        <a href="https://github.com/Ahmedw7heed" target="_blank" style="color:var(--text-main); transition:0.3s;"><i class="fab fa-github hover-glow"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <form id="contactForm" action="https://formsubmit.co/ahmedwheed759@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="رسالة جديدة من البورتفوليو الخاص بك!">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <input type="text" name="name" class="form-input" placeholder="Name" required>
+                <input type="email" name="email" class="form-input" placeholder="Email" required>
+                <textarea name="message" class="form-input" rows="5" placeholder="Message" required></textarea>
+                
+                <button type="submit" id="submitBtn" class="btn-main" style="width: 100%; font-size: 1.2rem; cursor: none;" data-i18n="form_btn">Send Message</button>
+                
+                <div id="formStatus" style="margin-top: 15px; text-align: center; font-weight: bold; font-size: 1.1rem; display: none;"></div>
+            </form>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.05); background: rgba(9, 12, 16, 0.8);">
+        <p>Designed & Built with <i class="fas fa-heart" style="color: #ff4757;"></i> by Ahmed Wahed &copy; 2026</p>
+    </footer>
+
+    <a href="https://wa.me/201158607724" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    
+    <script>
+        // --- 1. INITIALIZE AOS ---
+        AOS.init({ once: true, duration: 1000, easing: 'ease-out-cubic' });
+
+        // --- 2. 3D TILT EFFECT ---
+        VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.15,
+            scale: 1.02
+        });
+
+        // --- 3. SCROLL PROGRESS BAR ---
+        window.addEventListener("scroll", () => {
+            const scrollPx = document.documentElement.scrollTop;
+            const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollLen = Math.ceil(scrollPx / winHeightPx * 100);
+            document.getElementById("scroll-progress").style.width = scrollLen + "%";
+        });
+
+        // --- 4. TRANSLATIONS & BILINGUAL LOGIC ---
+        const translations = {
+            en: {
+                nav_about: "About", nav_edu: "Journey", nav_projects: "Work", nav_contact: "Contact",
+                hero_hi: "Hi, I'm Ahmed Wahed", 
+                hero_desc: "Transforming complex data into intelligent solutions. Passionate about Machine Learning, Data Engineering, and building the future of AI.",
+                hero_btn: "View Work", hero_contact: "Contact Me",
+                sec_edu: "My Journey", edu_uni: "Aqaba University of Technology", edu_degree: "B.Sc. in Artificial Intelligence",
+                cert1_title: "Professional Readiness in Automation", cert1_desc: "Crown Prince Foundation & NAHNO Platform",
+                cert2_title: "Artificial Intelligence Fundamentals", cert2_desc: "Udacity & Crown Prince Foundation (JoCoders)",
+                cert3_title: "Generative AI in Practice", cert3_desc: "Specialized AI Training & Applications",
+                sec_skills: "Tech Stack", sec_projects: "Projects",
+                proj1_title: "Smart-Parking-Predicto", proj1_desc: "An intelligent system based on computer vision to detect license plates using a custom YOLOv8 model, extracting text via EasyOCR and logging entry times.",
+                proj2_title: "AI-Match-Predictor", proj2_desc: "A custom AI model for analyzing data and predicting match outcomes based on advanced algorithms, with a statistical dashboard.",
+                proj3_title: "Akhbar Al-Youm", proj3_desc: "A professional news platform designed for a seamless reading experience, with an integrated dashboard for content management.",
+                proj4_title: "Ai-fire", proj4_desc: "A real-time computer vision project to detect fires and analyze scenes, providing early and smart warning systems.",
+                repo_btn: "Repository",
+                contact_title: "Let's Connect", sec_contact: "Contact", contact_phone: "PHONE", contact_email: "EMAIL", form_btn: "Send Message",
+                form_success: "✅ Sent successfully! I will contact you soon.",
+                form_error: "❌ Error occurred, please try again."
+            },
+            ar: {
+                nav_about: "من أنا", nav_edu: "مسيرتي", nav_projects: "أعمالي", nav_contact: "تواصل معي",
+                hero_hi: "أهلاً، أنا أحمد وحيد", 
+                hero_desc: "أقوم بتحويل البيانات المعقدة إلى حلول ذكية. شغوف بتعلم الآلة وهندسة البيانات وبناء مستقبل الذكاء الاصطناعي.",
+                hero_btn: "شاهد أعمالي", hero_contact: "تواصل معي",
+                sec_edu: "مسيرتي المهنية", edu_uni: "جامعة العقبة للتكنولوجيا", edu_degree: "بكالوريوس ذكاء اصطناعي",
+                cert1_title: "الجاهزية المهنية في زمن الأتمتة", cert1_desc: "مؤسسة ولي العهد ومنصة نحن (NAHNO)",
+                cert2_title: "أساسيات الذكاء الاصطناعي", cert2_desc: "Udacity بالتعاون مع مؤسسة ولي العهد (مبادرة JoCoders)",
+                cert3_title: "الذكاء الاصطناعي التوليدي في الواقع", cert3_desc: "تدريب متخصص في تطبيقات الذكاء الاصطناعي التوليدي",
+                sec_skills: "المهارات التقنية", sec_projects: "المشاريع",
+                proj1_title: "Smart-Parking-Predicto", proj1_desc: "نظام ذكي متكامل يعتمد على الرؤية الحاسوبية لاكتشاف لوحات السيارات باستخدام نموذج مخصص، مع استخراج النصوص آلياً عبر EasyOCR وتسجيل أوقات الدخول.",
+                proj2_title: "AI-Match-Predictor", proj2_desc: "نموذج ذكاء اصطناعي مخصص لتحليل البيانات وتوقع نتائج المباريات بناءً على الخوارزميات المتقدمة، مع واجهة لعرض الإحصائيات.",
+                proj3_title: "Akhbar Al-Youm", proj3_desc: "منصة إخبارية احترافية مصممة لتوفير تجربة قراءة سلسة، مع لوحة تحكم متكاملة لإدارة المقالات والأخبار اليومية بكفاءة عالية.",
+                proj4_title: "Ai-fire", proj4_desc: "مشروع يعتمد على تقنيات الرؤية الحاسوبية لاكتشاف الحرائق في الوقت الفعلي وتحليل المشاهد لتوفير إنذارات مبكرة وذكية.",
+                repo_btn: "المستودع",
+                contact_title: "لنتواصل معاً", sec_contact: "تواصل معي", contact_phone: "الهاتف", contact_email: "البريد الإلكتروني", form_btn: "إرسال الرسالة",
+                form_success: "✅ تم الإرسال بنجاح! سأتواصل معك قريباً.",
+                form_error: "❌ حدث خطأ، يرجى المحاولة مرة أخرى."
+            }
+        };
+
+        let currentLang = 'en';
+
+        // --- 5. TYPEWRITER LOGIC ---
+        const titles = {
+            en: "AI Student | Future Machine Learning Engineer | Passionate About Intelligent Systems",
+            ar: "طالب ذكاء اصطناعي | مهندس تعلم آلة مستقبلي | شغوف بالأنظمة الذكية"
+        };
+        let charIndex = 0;
+        let typeTimeout;
+
+        function startTypewriter(text) {
+            const el = document.getElementById('type-text');
+            clearTimeout(typeTimeout);
+            el.textContent = "";
+            charIndex = 0;
+            
+            function type() {
+                if (charIndex < text.length) {
+                    el.textContent += text.charAt(charIndex);
+                    charIndex++;
+                    typeTimeout = setTimeout(type, 40);
+                }
+            }
+            type();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startTypewriter(titles.en);
+        });
+
+        // LANGUAGE TOGGLE FUNCTION
+        function toggleLanguage() {
+            const langBtn = document.getElementById('langBtn');
+            const body = document.body;
+            currentLang = (currentLang === 'en') ? 'ar' : 'en';
+            
+            body.classList.toggle('rtl');
+            document.documentElement.lang = currentLang;
+            langBtn.textContent = (currentLang === 'en') ? "العربية" : "English";
+
+            startTypewriter(titles[currentLang]);
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    const tagName = el.tagName.toLowerCase();
+                    if(tagName === 'input' || tagName === 'textarea') el.placeholder = translations[currentLang][key];
+                    else el.innerHTML = translations[currentLang][key];
+                }
+            });
+        }
+
+        function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+
+        // --- 6. CUSTOM CURSOR LOGIC ---
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector('[data-cursor-outline]');
+        window.addEventListener("mousemove", function(e) {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 300, fill: "forwards" });
+        });
+        document.querySelectorAll('a, button, input, textarea, .tilt-card').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // --- 7. NAV SCROLL EFFECT ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // --- 8. PARTICLES (NEURAL NETWORK STYLE) ---
+        particlesJS("particles-js", {
+            "particles": { 
+                "number": { "value": 70 }, 
+                "color": { "value": "#8B5CF6" }, 
+                "shape": { "type": "circle" }, 
+                "opacity": { "value": 0.4 }, 
+                "size": { "value": 3, "random": true }, 
+                "line_linked": { "enable": true, "distance": 160, "color": "#5865F2", "opacity": 0.3, "width": 1.5 }, 
+                "move": { "enable": true, "speed": 1.5, "out_mode": "bounce" } 
+            },
+            "interactivity": { 
+                "detect_on": "window", 
+                "events": { 
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": {
+                    "grab": { "distance": 200, "line_linked": { "opacity": 0.8 } }
+                }
+            }
+        });
+
+        // --- 9. AJAX FORM SUBMISSION ---
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+
+        if(contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = currentLang === 'ar' ? '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...' : '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                formStatus.style.display = 'none';
+
+                const formData = new FormData(contactForm);
+
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success || data.success === "true") {
+                        formStatus.innerHTML = translations[currentLang].form_success;
+                        formStatus.style.color = '#25d366';
+                        formStatus.style.display = 'block';
+                        contactForm.reset(); 
+                    } else {
+                        formStatus.innerHTML = translations[currentLang].form_error;
+                        formStatus.style.color = '#ff4757';
+                        formStatus.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    formStatus.innerHTML = translations[currentLang].form_error;
+                    formStatus.style.color = '#ff4757';
+                    formStatus.style.display = 'block';
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>
